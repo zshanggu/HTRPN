@@ -1,0 +1,3 @@
+#python3.6 tools/ckpt_surgery.py --src1 checkpoints/coco/faster_rcnn/R_101_FPN_base/model_final.pth --method randinit --save-dir checkpoints/coco/faster_rcnn/faster_rcnn_R_101_FPN_all
+#python3.6 tools/ckpt_surgery.py --src1 checkpoints/voc/faster_rcnn/faster_rcnn_R_101_FPN_base1/voc_split1_model_final.pth --method randinit --save-dir checkpoints/voc/faster_rcnn/faster_rcnn_R_101_FPN_all_usc3_FSCE
+python3.6 tools/ckpt_surgery.py --src1 checkpoints/voc/faster_rcnn/faster_rcnn_R_101_FPN_base1/model_final.pth --method randinit --save-dir checkpoints/voc/faster_rcnn/faster_rcnn_R_101_FPN_all_1_usc_hierternary_0_8

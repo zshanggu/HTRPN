@@ -1,0 +1,2 @@
+#python3.6 tools/train_net.py --num-gpus 1 --config-file ./configs/COCO/R-101/base_training.yml
+python3.6 tools/train_net.py --num-gpus 4 --config-file ./configs/PASCAL_VOC/base-training/R101_FPN_base_training_split1.yml
