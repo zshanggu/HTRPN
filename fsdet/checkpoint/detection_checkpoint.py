@@ -56,5 +56,21 @@ class DetectionCheckpointer(Checkpointer):
             )
             checkpoint["model"] = model_state_dict
         # for non-caffe2 models, use standard ways to load it
+        if "roi_heads.encoder.head.0.weight" in checkpoint["model"]:
+            checkpoint["model"].pop("roi_heads.encoder.head.0.weight")
+        if "roi_heads.encoder.head.0.bias" in checkpoint["model"]:
+            checkpoint["model"].pop("roi_heads.encoder.head.0.bias")
+        if "roi_heads.encoder.head.2.weight" in checkpoint["model"]:
+            checkpoint["model"].pop("roi_heads.encoder.head.2.weight")
+        if "roi_heads.encoder.head.2.bias" in checkpoint["model"]:
+            checkpoint["model"].pop("roi_heads.encoder.head.2.bias")
+        if "roi_heads.encoder.head.0.weight" in checkpoint["model"]:
+            checkpoint["model"].pop("roi_heads.RPN_encoder.head.0.weight")
+        if "roi_heads.RPN_encoder.head.0.bias" in checkpoint["model"]:
+            checkpoint["model"].pop("roi_heads.RPN_encoder.head.0.bias")
+        if "roi_heads.RPN_encoder.head.2.weight" in checkpoint["model"]:
+            checkpoint["model"].pop("roi_heads.RPN_encoder.head.2.weight")
+        if "roi_heads.RPN_encoder.head.2.bias" in checkpoint["model"]:
+            checkpoint["model"].pop("roi_heads.RPN_encoder.head.2.bias")
         super()._load_model(checkpoint)
 

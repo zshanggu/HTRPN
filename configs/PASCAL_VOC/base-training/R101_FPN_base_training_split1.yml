@@ -7,10 +7,19 @@ MODEL:
   ROI_HEADS:
     NUM_CLASSES: 15
   PROPOSAL_GENERATOR:
-    NAME: "TernaryHiercRPN"  #"RPN"  #"HiercOnlyRPN" #"HiercRPN"  #
+    NAME: "TernaryHiercRPN"
     POTENTIAL_THRESHOLD: 0.75
     IS_FINE_TUNING: False
     IS_CONTRAST: True
+  ROI_BOX_HEAD:
+    CONTRASTIVE_BRANCH:
+      TEMPERATURE: 0.2
+      LOSS_WEIGHT: 0.5
+      DECAY:
+        ENABLED: True
+        STEPS: [ 4000, 7000 ]
+        RATE: 0.5
+      IOU_THRESHOLD: 0.5  # high credibility proposals provide consistency
 INPUT:
   MIN_SIZE_TRAIN: (480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800)
   MIN_SIZE_TEST: 800

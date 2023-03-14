@@ -1,7 +1,7 @@
 _BASE_: "../../Base-RCNN-FPN.yaml"
 
-MODEL: #/media/zeyu/8T/AI_MODEL/few_shot_learning/paper/boepaper2022/results/voc/split1_10shot_CL_IoU_boe_ok/model_final.pth /media/zeyu/8T/AI_MODEL/few_shot_learning/paper/boepaper2022/results/voc/split1_10shot_CL_IoU_boe_experiment2/model_0014999.pth
-  WEIGHTS: "/sgzy_fsce_test2/media/zeyu/8T/AI_MODEL/few_shot_learning/paper/boepaper2022/results/voc/split1_10shot_CL_IoU_boe_experiment2/model_final.pth"
+MODEL:
+  WEIGHTS: "checkpoints/voc/faster_rcnn/faster_rcnn_R_101_FPN_all_1/model_reset_surgery.pth"
   MASK_ON: False
   RESNETS:
     DEPTH: 101
@@ -11,12 +11,16 @@ MODEL: #/media/zeyu/8T/AI_MODEL/few_shot_learning/paper/boepaper2022/results/voc
     FREEZE_AT: 5
 
   PROPOSAL_GENERATOR:
+    NAME: "TernaryHiercRPN"
     FREEZE: False
+    POTENTIAL_THRESHOLD: 0.75
+    IS_FINE_TUNING: True
+    IS_CONTRAST: True
   RPN:
     POST_NMS_TOPK_TRAIN: 2000
 
   ROI_HEADS:
-    NAME: "ContrastiveROIHeads"
+    NAME: "TernaryHiercContraROIHeads"
     NUM_CLASSES: 20
     OUTPUT_LAYER: "CosineSimOutputLayers"
     FREEZE_FEAT: False
@@ -57,4 +61,4 @@ TEST:
     ENABLED: True
   EVAL_PERIOD: 5000
 
-OUTPUT_DIR: "checkpoints/voc/10shot_CL_IoU_seed_base_usc"
+OUTPUT_DIR: "checkpoints/voc/10shot_CL_IoU_seed_base"

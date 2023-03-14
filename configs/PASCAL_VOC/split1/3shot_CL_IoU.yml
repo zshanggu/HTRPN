@@ -11,12 +11,16 @@ MODEL:
     FREEZE_AT: 5
 
   PROPOSAL_GENERATOR:
+    NAME: "TernaryHiercRPN"
     FREEZE: False
+    POTENTIAL_THRESHOLD: 0.75
+    IS_FINE_TUNING: True
+    IS_CONTRAST: True
   RPN:
     POST_NMS_TOPK_TRAIN: 2000
 
   ROI_HEADS:
-    NAME: "ContrastiveROIHeads"
+    NAME: "TernaryHiercContraROIHeads"
     NUM_CLASSES: 20
     OUTPUT_LAYER: "CosineSimOutputLayers"
     FREEZE_FEAT: False

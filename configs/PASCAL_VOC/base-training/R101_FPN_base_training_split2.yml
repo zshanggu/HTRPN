@@ -6,6 +6,20 @@ MODEL:
     DEPTH: 101
   ROI_HEADS:
     NUM_CLASSES: 15
+  PROPOSAL_GENERATOR:
+    NAME: "TernaryHiercRPN"
+    POTENTIAL_THRESHOLD: 0.75
+    IS_FINE_TUNING: False
+    IS_CONTRAST: True
+  ROI_BOX_HEAD:
+    CONTRASTIVE_BRANCH:
+      TEMPERATURE: 0.2
+      LOSS_WEIGHT: 0.5
+      DECAY:
+        ENABLED: True
+        STEPS: [ 4000, 7000 ]
+        RATE: 0.5
+      IOU_THRESHOLD: 0.5  # high credibility proposals provide consistency
 INPUT:
   MIN_SIZE_TRAIN: (480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800)
   MIN_SIZE_TEST: 800
@@ -16,4 +30,7 @@ SOLVER:
   STEPS: (12000, 16000)
   MAX_ITER: 18000  # 17.4 epochs
   WARMUP_ITERS: 100
+
+TEST:
+  EVAL_PERIOD: 500
 OUTPUT_DIR: "checkpoints/voc/faster_rcnn/faster_rcnn_R_101_FPN_base2"

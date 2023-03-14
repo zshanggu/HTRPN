@@ -248,10 +248,10 @@ def find_ternary_top_rpn_proposals(
         # topk_scores_i, topk_idx = logits_i.topk(num_proposals_i, dim=1)
         # print("rpn_outputs.py!!!!!!!!!!!!!!!!!!!!!!logits_i", logits_i.shape)  # torch.Size([2, 170496, 3])
         if fine_tuning or not training:
-            logits_i_temp = torch.sum(logits_i[:, :, 1:3], dim=2, keepdim=True)
-            # print("rpn_outputs.py!!!!!!!!!!!!!!!!!!!!!!logits_i_temp.shape", logits_i_temp.shape) # torch.Size([2, 170496, 1])
-            _, idx = logits_i_temp.sort(descending=True, dim=1)  # sort the ternary classification
-            del logits_i_temp
+            logits_i_temp, _ = torch.max(logits_i[:, :, 1:3], 2)
+            logits_i_temp_unsqueeze = torch.unsqueeze(logits_i_temp, -1)
+            _, idx = logits_i_temp_unsqueeze.sort(descending=True, dim=1)  # sort the ternary classification
+            del logits_i_temp, logits_i_temp_unsqueeze
             # print("rpn_outputs.py!!!!!!!!!!!!!!!!!!!!!!logits_i.shape", logits_i.shape) #
             # print("rpn_outputs.py!!!!!!!!!!!!!!!!!!!!!!idx.shape", idx.shape)  # torch.Size([2, 170496, 1])
             topk_idx_slice = idx[batch_idx, :num_proposals_i]  # indexes of the top num_proposals_i scores

@@ -2,7 +2,7 @@ _BASE_: "../../Base-RCNN-FPN.yaml"
 
 MODEL:
   MASK_ON: False
-  WEIGHTS: "/sgzy_fsce_test2/media/zeyu/8T/AI_MODEL/few_shot_learning/paper/boepaper2022/results/coco/10shot_boe_experiment7/model_final.pth"
+  WEIGHTS: "/data/FSCE/checkpoints/COCO/R101/model_reset_surgery.pth"
   RESNETS:
     DEPTH: 101
 
@@ -11,11 +11,16 @@ MODEL:
     FREEZE_AT: 5
 
   PROPOSAL_GENERATOR:
+    NAME: "TernaryHiercRPN"
     FREEZE: False
+    POTENTIAL_THRESHOLD: 0.75
+    IS_FINE_TUNING: True
+    IS_CONTRAST: True
   RPN:
     POST_NMS_TOPK_TRAIN: 2000
 
   ROI_HEADS:
+    NAME: "TernaryHiercContraROIHeads"
     NUM_CLASSES: 80
     OUTPUT_LAYER: "CosineSimOutputLayers"
     FREEZE_FEAT: False

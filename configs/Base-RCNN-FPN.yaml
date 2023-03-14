@@ -1,6 +1,6 @@
 VERSION: 2
 MODEL:
-  META_ARCHITECTURE: "TernaryHiercGeneralizedRCNN"  #"GeneralizedRCNN" # "HiercGeneralizedRCNN" #
+  META_ARCHITECTURE: "TernaryHiercGeneralizedRCNN"
   BACKBONE:
     NAME: "build_resnet_fpn_backbone"
   RESNETS:
@@ -11,7 +11,7 @@ MODEL:
     SIZES: [[32], [64], [128], [256], [512]]  # One size for each in feature map
     ASPECT_RATIOS: [[0.5, 1.0, 2.0]]  # Three aspect ratios (same for all in feature maps)
   RPN:
-    HEAD_NAME: "TernaryRPNHead"  #"StandardRPNHead" #
+    HEAD_NAME: "TernaryRPNHead"
     IN_FEATURES: ["p2", "p3", "p4", "p5", "p6"]
     PRE_NMS_TOPK_TRAIN: 2000  # Per FPN level
     PRE_NMS_TOPK_TEST: 1000  # Per FPN level
@@ -21,7 +21,7 @@ MODEL:
     POST_NMS_TOPK_TRAIN: 1000
     POST_NMS_TOPK_TEST: 1000
   ROI_HEADS:
-    NAME: "TernaryHiercContraROIHeads" #"StandardROIHeads" #"TernaryHiercROIHeads" # "HiercStandardROIHeads" 
+    NAME: "TernaryHiercContraROIHeads"
     IN_FEATURES: ["p2", "p3", "p4", "p5"]
   ROI_BOX_HEAD:
     NAME: "FastRCNNConvFCHead"
