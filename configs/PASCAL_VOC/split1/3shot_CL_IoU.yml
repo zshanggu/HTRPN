@@ -61,4 +61,4 @@ TEST:
     ENABLED: True
   EVAL_PERIOD: 700
 
-OUTPUT_DIR: "checkpoints/voc/3shot_CL_IoU"
+OUTPUT_DIR: "checkpoints/voc/split1/3shot_CL_IoU"

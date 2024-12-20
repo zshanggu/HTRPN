@@ -1,14 +1,10 @@
-_BASE_: "../../../Base-RCNN-FPN.yaml"
+_BASE_: "../../Base-RCNN-FPN.yaml"
 
 MODEL:
-  WEIGHTS: "checkpoints/voc/draft/X101_base1/model_reset_surgery.pth"
+  WEIGHTS: "/data/FSCE/checkpoints/PASCAL_VOC/split3/model_reset_surgery.pth"
   MASK_ON: False
-  PIXEL_STD: [57.375, 57.120, 58.395]  # [1,1,1] for any MSRA model
   RESNETS:
     DEPTH: 101
-    STRIDE_IN_1X1: False  # C2 model
-    NUM_GROUPS: 32
-    WIDTH_PER_GROUP: 8
 
   BACKBONE:
     FREEZE: True
@@ -20,6 +16,7 @@ MODEL:
     POST_NMS_TOPK_TRAIN: 2000
 
   ROI_HEADS:
+    NAME: "ContrastiveROIHeads"
     NUM_CLASSES: 20
     OUTPUT_LAYER: "CosineSimOutputLayers"
     FREEZE_FEAT: True
@@ -27,25 +24,35 @@ MODEL:
     BATCH_SIZE_PER_IMAGE: 256
     IOU_THRESHOLDS: [0.4]
 
+  ROI_BOX_HEAD:
+    CONTRASTIVE_BRANCH:
+      TEMPERATURE: 0.2
+      LOSS_WEIGHT: 0.1
+      DECAY:
+        ENABLED: True
+        STEPS: [2000]
+        RATE: 0.5
+      IOU_THRESHOLD: 0.5
+
 INPUT:
   CROP:
-    ENABLED: TRUE
+    ENABLED: True
   MIN_SIZE_TRAIN: (480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800)
   MIN_SIZE_TEST: 800
 
 DATASETS:
-  TRAIN: ('voc_2007_trainval_all1_2shot',)
-  TEST: ('voc_2007_test_all1',)
+  TRAIN: ('voc_2007_trainval_all3_2shot',)
+  TEST: ('voc_2007_test_all3',)
 
 SOLVER:
   IMS_PER_BATCH: 16
   BASE_LR: 0.001
-  STEPS: (5000,)
-  MAX_ITER: 7000
+  STEPS: (6000,)
+  MAX_ITER: 8000
   CHECKPOINT_PERIOD: 5000
   WARMUP_ITERS: 20
 
 TEST:
-  EVAL_PERIOD: 700
+  EVAL_PERIOD: 500
 
-OUTPUT_DIR: "checkpoints/voc/ablation/X101/split1/2shot_baseline"
+OUTPUT_DIR: "checkpoints/voc/split3/2shot_baseline"

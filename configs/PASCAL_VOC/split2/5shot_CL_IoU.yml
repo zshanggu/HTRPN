@@ -1,7 +1,7 @@
 _BASE_: "../../Base-RCNN-FPN.yaml"
 
 MODEL:
-  WEIGHTS: "checkpoints/voc/split2/model_reset_surgery.pth"
+  WEIGHTS: "/data/FSCE/checkpoints/PASCAL_VOC/split2/model_reset_surgery.pth"
   MASK_ON: False
   RESNETS:
     DEPTH: 101
@@ -11,16 +11,21 @@ MODEL:
     FREEZE_AT: 5
 
   PROPOSAL_GENERATOR:
+    NAME: "TernaryHiercRPN"
     FREEZE: False
+    POTENTIAL_THRESHOLD: 0.75
+    IS_FINE_TUNING: True
+    IS_CONTRAST: True
   RPN:
     POST_NMS_TOPK_TRAIN: 2000
 
   ROI_HEADS:
-    NAME: "ContrastiveROIHeads"
+    NAME: "TernaryHiercContraROIHeads"
     NUM_CLASSES: 20
     OUTPUT_LAYER: "CosineSimOutputLayers"
     FREEZE_FEAT: False
     BATCH_SIZE_PER_IMAGE: 256
+    # SCORE_THRESH_TEST: 0.0
 
   ROI_BOX_HEAD:
     CONTRASTIVE_BRANCH:
@@ -43,17 +48,18 @@ DATASETS:
   TEST: ('voc_2007_test_all2',)
 
 SOLVER:
+  NAME: 'SGD'
   IMS_PER_BATCH: 16
-  BASE_LR: 0.001
+  BASE_LR: 0.01
   GAMMA: 0.5
   STEPS: (5000,7000)
   MAX_ITER: 9000
-  CHECKPOINT_PERIOD: 5000
-  WARMUP_ITERS: 100
+  CHECKPOINT_PERIOD: 1000
+  WARMUP_ITERS: 200
 
 TEST:
   AUG:
     ENABLED: True
   EVAL_PERIOD: 700
 
-OUTPUT_DIR: "checkpoints/voc/ablation/split2/5shot_CL_IoU"
+OUTPUT_DIR: "checkpoints/voc/split2/5shot_CL_IoU_seed_base"

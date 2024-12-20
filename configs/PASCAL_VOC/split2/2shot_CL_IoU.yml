@@ -1,7 +1,7 @@
 _BASE_: "../../Base-RCNN-FPN.yaml"
 
 MODEL:
-  WEIGHTS: "checkpoints/voc/split2/model_reset_surgery.pth"
+  WEIGHTS: "/data/FSCE/checkpoints/PASCAL_VOC/split2/model_reset_surgery.pth"
   MASK_ON: False
   RESNETS:
     DEPTH: 101
@@ -55,4 +55,4 @@ SOLVER:
 TEST:
   EVAL_PERIOD: 500
 
-OUTPUT_DIR: "checkpoints/voc/ablation/split2/2shot_baseline"
+OUTPUT_DIR: "checkpoints/voc/split2/2shot_baseline"

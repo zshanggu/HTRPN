@@ -1,7 +1,7 @@
 _BASE_: "../../Base-RCNN-FPN.yaml"
 
 MODEL:
-  WEIGHTS: "checkpoints/voc/faster_rcnn/faster_rcnn_R_101_FPN_all_1/model_reset_surgery.pth"
+  WEIGHTS: "/data/FSCE/checkpoints/PASCAL_VOC/split1/model_reset_surgery.pth"
   MASK_ON: False
   RESNETS:
     DEPTH: 101
@@ -61,4 +61,4 @@ TEST:
     ENABLED: True
   EVAL_PERIOD: 5000
 
-OUTPUT_DIR: "checkpoints/voc/10shot_CL_IoU_seed_base"
+OUTPUT_DIR: "checkpoints/voc/split1/10shot_CL_IoU_seed_base"

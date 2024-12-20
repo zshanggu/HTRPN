@@ -7,24 +7,34 @@ This work is built upon the codebase [FSCE](https://github.com/megvii-research/F
 
 ## Installation
 
+Run the docker file:
+```
+docker build -t cuda11.2-python3.8 .
+```
+
 FsDet is built on [Detectron2](https://github.com/facebookresearch/detectron2). The required dependencies to build `FsDet` is as below. Necessary libraries and functions are available in the folder FsDet. 
 
 **Dependencies**
 
 * Linux with Python >= 3.6
-* [PyTorch](https://pytorch.org/get-started/locally/) >= 1.3 
-* [torchvision](https://github.com/pytorch/vision/) that matches the PyTorch installation
+* [PyTorch](https://pytorch.org/get-started/locally/) >= 1.3
+* [torchvision](https://github.com/pytorch/vision/) that matches the PyTorch installation:  ```pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html```
 * Dependencies: ```pip install -r requirements.txt```
-* pycocotools: ```pip install cython; pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'```
+<!-- * pycocotools: ```pip install cython; pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'``` -->
 * [fvcore](https://github.com/facebookresearch/fvcore/): ```pip install 'git+https://github.com/facebookresearch/fvcore'``` 
 * [OpenCV](https://pypi.org/project/opencv-python/), optional, needed by demo and visualization ```pip install opencv-python```
 * GCC >= 4.9
-* CUDA >= 10.2 (CUDA >= 11 is not recommended)
+* CUDA >= 10.2
 
 **Build**
 
 ```bash
-python setup.py build develop
+python3 setup.py clean
+python3 setup.py build develop # (you probably need TORCH_USE_CUDA_DSA=1 or sudo or TORCH_CUDA_ARCH_LIST="8.6")
+```
+If you cannot import the installed package of FsDet, try:
+```
+export PYTHONPATH=/path/to/your/fsdet/package:$PYTHONPATH
 ```
 
 ## Data preparation

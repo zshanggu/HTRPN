@@ -26,6 +26,10 @@ def get_extensions():
     sources = [main_source] + sources
     extension = CppExtension
 
+    # Get the compute capability of the current CUDA device
+    compute_capability = torch.cuda.get_device_capability(0)  # Gets the capability of the first device
+    # cuda_arch = f"-gencode arch=compute_{compute_capability[0]}{compute_capability[1]},code=sm_{compute_capability[0]}{compute_capability[1]}"
+
     extra_compile_args = {"cxx": []}
     define_macros = []
 
@@ -38,6 +42,9 @@ def get_extensions():
             "-D__CUDA_NO_HALF_OPERATORS__",
             "-D__CUDA_NO_HALF_CONVERSIONS__",
             "-D__CUDA_NO_HALF2_OPERATORS__",
+            "-gencode", "arch=compute_75,code=sm_75",  # Add previous gen support (if needed)
+            "-gencode", "arch=compute_80,code=sm_80",  # Add another common version
+            "-gencode", f"arch=compute_{compute_capability[0]}{compute_capability[1]},code=sm_{compute_capability[0]}{compute_capability[1]}"  # Your architecture
         ]
 
         # It's better if pytorch can do this by default ..

@@ -103,7 +103,7 @@ class VideoVisualizer:
         """
 
         # Compute iou with boxes:
-        is_crowd = np.zeros((len(instances),), dtype=np.bool)
+        is_crowd = np.zeros((len(instances),), dtype=bool)
         boxes_old = [x.bbox for x in self._old_instances]
         boxes_new = [x.bbox for x in instances]
         ious = mask_util.iou(boxes_old, boxes_new, is_crowd)
